@@ -1,0 +1,5 @@
+[31m[error][0m	error
+[33m[warn][0m	warn
+[34m[info][0m	info
+[90m[debug][0m	debug
+[36m[trace][0m	trace

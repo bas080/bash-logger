@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+LOG_LEVEL=${LOG_LEVEL:-5}
+LOG_COLOR=${LOG_COLOR:-true}
+LOG_TEMPLATE=${LOG_TEMPLATE:-'[%s]\t%b\n'}
+LOG_TEMPLATE_COLOR=${LOG_TEMPLATE_COLOR:-'\033[%sm[%s]\e[0m\t%b\n'}
+
+log() {
+  local level=$1; shift
+  local code=$1; shift
+  local text=$1; shift
+
+  test "$level" -gt "$LOG_LEVEL" && return 0
+
+  test "$LOG_COLOR" = "true" && \
+    (>&2 printf "$LOG_TEMPLATE_COLOR" "$code" "$text" "$*") || \
+    (>&2 printf "$LOG_TEMPLATE" "$text" "$*")
+}
+
+log_error() { log 1 31 error "$@"; }
+log_warn()  { log 2 33 warn "$@"; }
+log_info()  { log 3 34 info "$@"; }
+log_debug() { log 4 90 debug "$@"; }
+log_trace() { log 5 36 trace "$@"; }
