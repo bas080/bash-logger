@@ -19,8 +19,8 @@ function log ()
 
 function logify ()
 {
-    eval "$@" 2> >(log 3)
-}
+    "$@" 2> >(log 3)
+};
 
 function log_error() { log 1 "$1"; }
 function log_warn()  { log 2 "$1"; }
