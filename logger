@@ -22,8 +22,8 @@ function logify ()
     "$@" 2> >(log 3)
 };
 
-function log_error() { log 1 "$1"; }
-function log_warn()  { log 2 "$1"; }
-function log_info()  { log 3 "$1"; }
-function log_debug() { log 4 "$1"; }
-function log_trace() { log 5 "$1"; }
+function log_error() { log 1 "${1:-}"; }
+function log_warn()  { log 2 "${1:-}"; }
+function log_info()  { log 3 "${1:-}"; }
+function log_debug() { log 4 "${1:-}"; }
+function log_trace() { log 5 "${1:-}"; }
