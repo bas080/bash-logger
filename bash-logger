@@ -3,6 +3,7 @@
 LOGGER_FILE="${LOGGER_FILE:-/dev/null}";
 LOGGER_LEVEL="${LOGGER_LEVEL:-3}";
 LOGGER_TEMPLATE="${LOGGER_TEMPLATE:-%s[%s] %b\n}";
+LOGGER_SILENT="${LOGGER_SILENT:-}"
 
 function log ()
 {
@@ -12,9 +13,20 @@ function log ()
     };
     local level="${1:-3}";
     local timestamp;
-    timestamp="$(date -Iseconds)";
+    timestamp="$(logger_date)";
     test "$LOGGER_LEVEL" -ge "$level" || return;
-    xargs -r -d '\n' -l printf "$LOGGER_TEMPLATE" "$timestamp" "$level" | tee -a "$LOGGER_FILE" 1>&2
+    xargs -l -r -d '\n' printf "$LOGGER_TEMPLATE" "$timestamp" "$level" | {
+        if [[ -z "$LOGGER_SILENT" ]] ; then
+            tee -a "$LOGGER_FILE" 1>&2
+        else
+            cat - > /dev/null
+        fi
+    }
+};
+
+function logger_date ()
+{
+    date -Iseconds
 };
 
 function logify ()
