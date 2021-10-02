@@ -18,5 +18,5 @@ snapshot <({
   log_info info
   log_debug debug
   log_trace trace
-} 2>&1) ./t/bash-logger.t.snapshot
+} | diagnostics) ./t/bash-logger.t.snapshot
 test_success "Log functions output correctly"

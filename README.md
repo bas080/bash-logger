@@ -13,14 +13,14 @@ Simply source the script and use the functions it defines.
 
 ```bash
 $ source ./bash-logger; log_error "error"
-2021-09-27T22:09:25+02:00[1] error
+2021-09-27T22:14:52+02:00[1] error
 ```
 
 An important part of the logger utility is the stdin support.
 
 ```bash
 $ source ./bash-logger; echo 'warn' | log_warn
-2021-09-27T22:09:26+02:00[2] warn
+2021-09-27T22:14:52+02:00[2] warn
 ```
 
 ## Functions
@@ -56,9 +56,9 @@ You can write the log to a file by defining the `LOGGER_FILE`.
 
 ```bash
 $ source ./bash-logger; echo 'warn' | LOGGER_FILE="./bash-logger.log" log_info "info"
-2021-09-27T22:09:26+02:00[3] info
+2021-09-27T22:14:52+02:00[3] info
 $ cat ./bash-logger.log
-2021-09-27T22:09:26+02:00[3] info
+2021-09-27T22:14:52+02:00[3] info
 $ rm ./bash-logger.log # Cleaning up
 
 ```
@@ -75,7 +75,7 @@ info(3) by default.
 
 ```bash
 $ source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
-2021-09-27T22:09:26+02:00[5] trace
+2021-09-27T22:14:52+02:00[5] trace
 ```
 
 You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
@@ -94,6 +94,7 @@ $ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<messag
 
 - Allow changing the date format.
 - What License to give?
+- Replace Barkdown with Markatzea.
 
 ## License
 

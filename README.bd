@@ -75,6 +75,7 @@ $ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<messag
 
 - Allow changing the date format.
 - What License to give?
+- Replace Barkdown with Markatzea.
 
 ## License
 
