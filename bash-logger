@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+declare -A LOGGER_LEGEL_NAMES=([1]=error [2]=warn [3]=info [4]=debug [5]=trace)
+
 LOGGER_FILE="${LOGGER_FILE:-/dev/null}";
 LOGGER_LEVEL="${LOGGER_LEVEL:-3}";
 LOGGER_TEMPLATE="${LOGGER_TEMPLATE:-%s[%s] %b\n}";
@@ -15,7 +17,10 @@ function log ()
     local timestamp;
     timestamp="$(logger_date)";
     test "$LOGGER_LEVEL" -ge "$level" || return;
-    xargs -l -r -d '\n' printf "$LOGGER_TEMPLATE" "$timestamp" "$level" | {
+
+    xargs -l -r -d '\n' printf "$LOGGER_TEMPLATE" \
+      "$timestamp" \
+      "${LOGGER_LEGEL_NAMES[$level]}" | {
         if [[ -z "$LOGGER_SILENT" ]] ; then
             tee -a "$LOGGER_FILE" 1>&2
         else
