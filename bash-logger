@@ -16,7 +16,10 @@ function log ()
     local level="${1:-3}";
     local timestamp;
     timestamp="$(logger_date)";
-    test "$LOGGER_LEVEL" -ge "$level" || return;
+    test "$LOGGER_LEVEL" -ge "$level" || {
+      true
+      return;
+    }
 
     xargs -l -r -d '\n' printf "$LOGGER_TEMPLATE" \
       "$timestamp" \
