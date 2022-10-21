@@ -15,7 +15,7 @@ Simply source the script and use the functions it defines.
 source ./bash-logger; log_error "error"
 ```
 ```
-2022-10-21T10:43:59+02:00[error] error
+2022-10-21T10:51:41+02:00[error] error
 ```
 
 An important part of the logger utility is the stdin support.
@@ -24,7 +24,7 @@ An important part of the logger utility is the stdin support.
 source ./bash-logger; echo 'warn' | log_warn
 ```
 ```
-2022-10-21T10:43:59+02:00[warn] warn
+2022-10-21T10:51:41+02:00[warn] warn
 ```
 
 ## Functions
@@ -68,8 +68,8 @@ cat ./bash-logger.log
 rm ./bash-logger.log # Cleaning up
 ```
 ```
-2022-10-21T10:43:59+02:00[info] info
-2022-10-21T10:43:59+02:00[info] info
+2022-10-21T10:51:41+02:00[info] info
+2022-10-21T10:51:41+02:00[info] info
 ```
 
 How to use the `LOGGER_LEVEL`?
@@ -85,7 +85,7 @@ info(3) by default.
 source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
 ```
 ```
-2022-10-21T10:43:59+02:00[trace] trace
+2022-10-21T10:51:41+02:00[trace] trace
 ```
 
 You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
@@ -105,8 +105,7 @@ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>
 ## Improvements
 
 - Allow changing the date format.
-- What License to give?
 
 ## License
 
-TODO
+[GPLv3](./LICENSE.md)

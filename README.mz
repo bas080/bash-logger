@@ -72,8 +72,7 @@ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>
 ## Improvements
 
 - Allow changing the date format.
-- What License to give?
 
 ## License
 
-TODO
+[GPLv3](./LICENSE.md)
