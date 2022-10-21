@@ -1,5 +1,3 @@
-#!/usr/bin/env barkdown
-
 # Bash Logger
 
 > Simple log functionality for bash
@@ -13,22 +11,22 @@
 Simply source the script and use the functions it defines.
 
 
-```bash
-$ source ./bash-logger; log_error "error"
+```bash bash 2>&1
+source ./bash-logger; log_error "error"
 ```
 
 An important part of the logger utility is the stdin support.
 
-```bash
-$ source ./bash-logger; echo 'warn' | log_warn
+```bash bash 2>&1
+source ./bash-logger; echo 'warn' | log_warn
 ```
 
 ## Functions
 
 Let's checkout all the functions that exist.
 
-```bash
-$ grep '^function ' ./bash-logger
+```bash bash 2>&1
+grep '^function ' ./bash-logger
 ```
 
 So what is this `logify` function? What it does is call the command and
@@ -36,29 +34,29 @@ arguments and write any stderr using the `LOGGER_TEMPLATE`
 
 ## Variables
 
-```bash
-$ grep '^LOGGER_[A-Z]*=' ./bash-logger
+```bash bash 2>&1
+grep '^LOGGER_[A-Z]*=' ./bash-logger
 ```
 
 You can write the log to a file by defining the `LOGGER_FILE`.
 
-```bash
-$ source ./bash-logger; echo 'warn' | LOGGER_FILE="./bash-logger.log" log_info "info"
-$ cat ./bash-logger.log
-$ rm ./bash-logger.log # Cleaning up
+```bash bash 2>&1
+source ./bash-logger; echo 'warn' | LOGGER_FILE="./bash-logger.log" log_info "info"
+cat ./bash-logger.log
+rm ./bash-logger.log # Cleaning up
 ```
 
 How to use the `LOGGER_LEVEL`?
 
-```bash
-$ source ./bash-logger; log_trace "trace"
+```bash bash 2>&1
+source ./bash-logger; log_trace "trace"
 ```
 
 Notice that trace is not printed. By default the `LOGGER_LEVEL` is set to
 info(3) by default.
 
-```bash
-$ source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
+```bash bash 2>&1
+source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
 ```
 
 You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
@@ -66,16 +64,15 @@ templates. See `man printf` for more information.
 
 By default the `LOGGER_TEMPLATE` is the following.
 
-```bash
-$ source ./bash-logger; echo "$LOGGER_TEMPLATE";
-$ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
+```bash bash 2>&1
+source ./bash-logger; echo "$LOGGER_TEMPLATE";
+source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
 ```
 
 ## Improvements
 
 - Allow changing the date format.
 - What License to give?
-- Replace Barkdown with Markatzea.
 
 ## License
 

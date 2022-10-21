@@ -11,24 +11,30 @@
 Simply source the script and use the functions it defines.
 
 
-```bash
-$ source ./bash-logger; log_error "error"
-2021-10-07T22:38:55+02:00[error] error
+```bash bash 2>&1
+source ./bash-logger; log_error "error"
+```
+```
+2022-10-21T10:43:59+02:00[error] error
 ```
 
 An important part of the logger utility is the stdin support.
 
-```bash
-$ source ./bash-logger; echo 'warn' | log_warn
-2021-10-07T22:38:55+02:00[warn] warn
+```bash bash 2>&1
+source ./bash-logger; echo 'warn' | log_warn
+```
+```
+2022-10-21T10:43:59+02:00[warn] warn
 ```
 
 ## Functions
 
 Let's checkout all the functions that exist.
 
-```bash
-$ grep '^function ' ./bash-logger
+```bash bash 2>&1
+grep '^function ' ./bash-logger
+```
+```
 function log ()
 function logger_date ()
 function logify ()
@@ -44,8 +50,10 @@ arguments and write any stderr using the `LOGGER_TEMPLATE`
 
 ## Variables
 
-```bash
-$ grep '^LOGGER_[A-Z]*=' ./bash-logger
+```bash bash 2>&1
+grep '^LOGGER_[A-Z]*=' ./bash-logger
+```
+```
 LOGGER_FILE="${LOGGER_FILE:-/dev/null}";
 LOGGER_LEVEL="${LOGGER_LEVEL:-3}";
 LOGGER_TEMPLATE="${LOGGER_TEMPLATE:-%s[%s] %b\n}";
@@ -54,28 +62,30 @@ LOGGER_SILENT="${LOGGER_SILENT:-}"
 
 You can write the log to a file by defining the `LOGGER_FILE`.
 
-```bash
-$ source ./bash-logger; echo 'warn' | LOGGER_FILE="./bash-logger.log" log_info "info"
-2021-10-07T22:38:55+02:00[info] info
-$ cat ./bash-logger.log
-2021-10-07T22:38:55+02:00[info] info
-$ rm ./bash-logger.log # Cleaning up
-
+```bash bash 2>&1
+source ./bash-logger; echo 'warn' | LOGGER_FILE="./bash-logger.log" log_info "info"
+cat ./bash-logger.log
+rm ./bash-logger.log # Cleaning up
+```
+```
+2022-10-21T10:43:59+02:00[info] info
+2022-10-21T10:43:59+02:00[info] info
 ```
 
 How to use the `LOGGER_LEVEL`?
 
-```bash
-$ source ./bash-logger; log_trace "trace"
-
+```bash bash 2>&1
+source ./bash-logger; log_trace "trace"
 ```
 
 Notice that trace is not printed. By default the `LOGGER_LEVEL` is set to
 info(3) by default.
 
-```bash
-$ source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
-2021-10-07T22:38:55+02:00[trace] trace
+```bash bash 2>&1
+source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
+```
+```
+2022-10-21T10:43:59+02:00[trace] trace
 ```
 
 You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
@@ -83,10 +93,12 @@ templates. See `man printf` for more information.
 
 By default the `LOGGER_TEMPLATE` is the following.
 
-```bash
-$ source ./bash-logger; echo "$LOGGER_TEMPLATE";
+```bash bash 2>&1
+source ./bash-logger; echo "$LOGGER_TEMPLATE";
+source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
+```
+```
 %s[%s] %b\n
-$ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
 <datetime>[<code>] <message>
 ```
 
@@ -94,7 +106,6 @@ $ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<messag
 
 - Allow changing the date format.
 - What License to give?
-- Replace Barkdown with Markatzea.
 
 ## License
 
