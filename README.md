@@ -15,7 +15,7 @@ Simply source the script and use the functions it defines.
 source ./bash-logger; log_error "error"
 ```
 ```
-2022-10-21T10:51:41+02:00[error] error
+2022-10-21T10:57:49+02:00[error] error
 ```
 
 An important part of the logger utility is the stdin support.
@@ -24,7 +24,7 @@ An important part of the logger utility is the stdin support.
 source ./bash-logger; echo 'warn' | log_warn
 ```
 ```
-2022-10-21T10:51:41+02:00[warn] warn
+2022-10-21T10:57:49+02:00[warn] warn
 ```
 
 ## Functions
@@ -36,17 +36,13 @@ grep '^function ' ./bash-logger
 ```
 ```
 function log ()
-function logger_date ()
-function logify ()
+function log_date ()
 function log_error() { log 1 "${1:-}"; }
 function log_warn()  { log 2 "${1:-}"; }
 function log_info()  { log 3 "${1:-}"; }
 function log_debug() { log 4 "${1:-}"; }
 function log_trace() { log 5 "${1:-}"; }
 ```
-
-So what is this `logify` function? What it does is call the command and
-arguments and write any stderr using the `LOGGER_TEMPLATE`
 
 ## Variables
 
@@ -68,8 +64,8 @@ cat ./bash-logger.log
 rm ./bash-logger.log # Cleaning up
 ```
 ```
-2022-10-21T10:51:41+02:00[info] info
-2022-10-21T10:51:41+02:00[info] info
+2022-10-21T10:57:49+02:00[info] info
+2022-10-21T10:57:49+02:00[info] info
 ```
 
 How to use the `LOGGER_LEVEL`?
@@ -85,7 +81,7 @@ info(3) by default.
 source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
 ```
 ```
-2022-10-21T10:51:41+02:00[trace] trace
+2022-10-21T10:57:49+02:00[trace] trace
 ```
 
 You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
@@ -102,9 +98,24 @@ source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>
 <datetime>[<code>] <message>
 ```
 
-## Improvements
+## Define your own date.
 
-- Allow changing the date format.
+You can overwrite the date format by simply defining your own log_date function.
+
+```bash bash 2>&1
+source ./bash-logger;
+
+# Make sure to define your function after sourcing bash-logger.
+
+log_date() {
+  echo 'my own date'
+}
+
+log_error 'important'
+```
+```
+my own date[error] important
+```
 
 ## License
 

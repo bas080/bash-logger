@@ -15,7 +15,7 @@ function log ()
     };
     local level="${1:-3}";
     local timestamp;
-    timestamp="$(logger_date)";
+    timestamp="$(log_date)";
     test "$LOGGER_LEVEL" -ge "$level" || {
       true
       return;
@@ -32,14 +32,9 @@ function log ()
     }
 };
 
-function logger_date ()
+function log_date ()
 {
     date -Iseconds
-};
-
-function logify ()
-{
-    "$@" 2> >(log 3)
 };
 
 function log_error() { log 1 "${1:-}"; }

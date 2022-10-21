@@ -29,9 +29,6 @@ Let's checkout all the functions that exist.
 grep '^function ' ./bash-logger
 ```
 
-So what is this `logify` function? What it does is call the command and
-arguments and write any stderr using the `LOGGER_TEMPLATE`
-
 ## Variables
 
 ```bash bash 2>&1
@@ -69,9 +66,21 @@ source ./bash-logger; echo "$LOGGER_TEMPLATE";
 source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
 ```
 
-## Improvements
+## Define your own date.
 
-- Allow changing the date format.
+You can overwrite the date format by simply defining your own log_date function.
+
+```bash bash 2>&1
+source ./bash-logger;
+
+# Make sure to define your function after sourcing bash-logger.
+
+log_date() {
+  echo 'my own date'
+}
+
+log_error 'important'
+```
 
 ## License
 
