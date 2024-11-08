@@ -116,21 +116,21 @@ log_info 'Changed the logger_template function'
 
 ## Define your own date.
 
-You can overwrite the date format by simply defining your own log_date function.
+You can overwrite the date format by simply defining your own logger_date function.
 
 ```bash
 source ./bash-logger;
 
 # Make sure to define your function after sourcing bash-logger.
 
-log_date() {
+logger_date() {
   echo 'my own date'
 }
 
 log_error 'important'
 ```
 ```
-2024-11-06T12:36:53+02:00[error] important
+my own date[error] important
 ```
 
 ## Test
