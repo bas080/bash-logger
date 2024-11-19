@@ -1,38 +1,52 @@
 #!/usr/bin/env bash
 
-declare -A LOGGER_LEGEL_NAMES=([1]=error [2]=warn [3]=info [4]=debug [5]=trace)
+declare -A LOGGER_LEVEL_NAMES=([1]=error [2]=warn [3]=info [4]=debug [5]=trace)
 
 LOGGER_FILE="${LOGGER_FILE:-/dev/null}";
 LOGGER_LEVEL="${LOGGER_LEVEL:-3}";
-LOGGER_TEMPLATE="${LOGGER_TEMPLATE:-%s[%s] %b\n}";
-LOGGER_SILENT="${LOGGER_SILENT:-}"
+LOGGER_TEMPLATE="${LOGGER_TEMPLATE:-}"
+
+function logger_template()
+{
+    local COLOR_DARK_GRAY=""
+    local COLOR_RESET=""
+
+    if [ ! -f "$LOGGER_FILE" ] && tput colors &>/dev/null && [ "$(tput colors)" -ge 8 ]; then
+        COLOR_DARK_GRAY='\x1b[90m'
+        COLOR_RESET='\x1b[0m'
+    fi
+
+    echo "${COLOR_DARK_GRAY}%s[%s] %b${COLOR_RESET}\n";
+}
 
 function log ()
 {
-    [[ -z "${2:-}" ]] || {
-        log "$1" <<< "$2";
-        return
-    };
     local level="${1:-3}";
-    local timestamp;
-    timestamp="$(log_date)";
     test "$LOGGER_LEVEL" -ge "$level" || {
       true
       return;
     }
 
-    xargs -l -r -d '\n' printf "$LOGGER_TEMPLATE" \
+    [[ -z "${2:-}" ]] || {
+        log "$1" <<< "$2";
+        return
+    };
+
+
+    local timestamp;
+    timestamp="$(logger_date)";
+
+    touch "$LOGGER_FILE"
+
+    local template="${LOGGER_TEMPLATE:-$(logger_template)}"
+
+    xargs -l -r -d '\n' printf "$template" \
       "$timestamp" \
-      "${LOGGER_LEGEL_NAMES[$level]}" | {
-        if [[ -z "$LOGGER_SILENT" ]] ; then
-            tee -a "$LOGGER_FILE" 1>&2
-        else
-            cat - > /dev/null
-        fi
-    }
+      "${LOGGER_LEVEL_NAMES[$level]}" |
+      tee -a "$LOGGER_FILE" 1>&2
 };
 
-function log_date ()
+function logger_date ()
 {
     date -Iseconds
 };

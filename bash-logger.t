@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 
-source bash-logger
-source bash-tap
-source bash-snapshot
+source ./bash-logger
+
+# Write to file
+LOGGER_FILE="/tmp/bash-logger.tmp"
+
+rm "$LOGGER_FILE"
 
 # Overwrite so the date is constant
 logger_date() {
   echo '<date>'
 }
 
-plan 1
 
-snapshot <({
+{
   log_error error
   log_warn warn
   log_info info
   log_debug debug
   log_trace trace
-} 2>&1) ./t/bash-logger.t.snapshot
-test_success "Log functions output correctly"
+} 2>&1
+
+cat "$LOGGER_FILE"

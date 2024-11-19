@@ -56,32 +56,58 @@ info(3) by default.
 source ./bash-logger; LOGGER_LEVEL=5 log_trace "trace"
 ```
 
-You can change the `LOGGER_TEMPLATE` if desired. The template is a printf
-templates. See `man printf` for more information.
+## Template
+
+You can change the the template by setting the `LOGGER_TEMPLATE` or defining
+your own logger_template function.
+
+> Templates are a simple printf template. See `man printf` for more information.
 
 By default the `LOGGER_TEMPLATE` is the following.
 
 ```bash bash 2>&1
-source ./bash-logger; echo "$LOGGER_TEMPLATE";
-source ./bash-logger; printf "$LOGGER_TEMPLATE" '<datetime>' '<code>' '<message>'
+
+source ./bash-logger;
+
+LOGGER_TEMPLATE='%s:%s:%b\n'
+
+log_info 'Changed the LOGGER_TEMPLATE environment variable'
+
+unset LOGGER_TEMPLATE
+
+logger_template() {
+  echo '%s|%s|%b\n'
+}
+
+log_info 'Changed the logger_template function'
 ```
 
 ## Define your own date.
 
-You can overwrite the date format by simply defining your own log_date function.
+You can overwrite the date format by simply defining your own logger_date function.
 
 ```bash bash 2>&1
 source ./bash-logger;
 
 # Make sure to define your function after sourcing bash-logger.
 
-log_date() {
+logger_date() {
   echo 'my own date'
 }
 
 log_error 'important'
 ```
 
+## Test
+
+bash-logger uses [spat][spat] to test the output.
+
+```bash bash
+spat ./bash-logger.t
+```
+
 ## License
 
 [GPLv3](./LICENSE.md)
+
+[spat]:https://github.com/bas080/spat
